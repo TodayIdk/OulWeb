@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oul — Docs</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .dh {
+            position:fixed;top:0;left:0;right:0;z-index:1000;height:56px;
+            display:flex;align-items:center;justify-content:space-between;
+            padding:0 24px;background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+            border-bottom:1px solid var(--border);
+        }
+        .dh-left{display:flex;align-items:center;gap:16px;}
+        .dh-logo{font-size:16px;font-weight:800;letter-spacing:3px;color:var(--accent);}
+        .dh-sep{color:var(--text3);font-weight:200;}
+        .dh-title{font-size:14px;color:var(--text2);font-weight:500;}
+        .dh-right{display:flex;align-items:center;gap:12px;}
+
+        .sb {
+            position:fixed;top:56px;left:0;width:250px;height:calc(100vh - 56px);
+            background:var(--bg2);border-right:1px solid var(--border);
+            overflow-y:auto;padding:20px 0;
+        }
+        .sb::-webkit-scrollbar{width:3px;}
+        .sb::-webkit-scrollbar-thumb{background:#222;}
+        .sb-sec{
+            padding:10px 20px 6px;font-size:10px;text-transform:uppercase;
+            letter-spacing:2px;color:var(--text3);font-weight:700;margin-top:10px;
+        }
+        .sb a{
+            display:block;padding:7px 20px 7px 28px;font-size:13.5px;
+            color:var(--text2);transition:all 0.15s;
+            border-left:2px solid transparent;
+        }
+        .sb a:hover{color:#fff;background:var(--bg4);border-left-color:#444;}
+
+        .dc{margin-left:250px;padding:80px 50px 120px;max-width:820px;}
+        .dc section{margin-bottom:80px;}
+        .dc h2{
+            font-size:30px;font-weight:800;letter-spacing:-0.5px;
+            margin-bottom:18px;padding-bottom:14px;
+            border-bottom:1px solid var(--border);color:var(--accent);
+        }
+        .dc h3{font-size:18px;font-weight:700;margin:36px 0 10px;color:var(--text);}
+        .dc h4{
+            font-size:11px;font-weight:700;text-transform:uppercase;
+            letter-spacing:2px;color:var(--text3);margin:28px 0 10px;
+        }
+        .dc p{font-size:15px;margin-bottom:14px;line-height:1.75;}
+        .dc ul,.dc ol{margin:10px 0 18px 20px;}
+        .dc li{font-size:14.5px;margin-bottom:6px;line-height:1.6;}
+        .keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 18px;}
+        .key{
+            padding:3px 10px;background:var(--bg4);border:1px solid var(--border);
+            border-radius:5px;font-family:'JetBrains Mono',monospace;
+            font-size:12px;color:var(--text2);
+        }
+
+        @media(max-width:800px){
+            .sb{position:static;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--border);}
+            .dc{margin-left:0;padding:30px 20px 80px;}
+        }
+    </style>
+</head>
+<body>
+
+<div class="dh">
+    <div class="dh-left">
+        <a href="/" class="dh-logo">OUL</a>
+        <span class="dh-sep">/</span>
+        <span class="dh-title" data-en="Documentation" data-ru="Документация">Documentation</span>
+    </div>
+    <div class="dh-right">
+        <button class="btn btn-sm btn-secondary" onclick="toggleLang()" id="langBtn">RU</button>
+        <a href="/" class="btn btn-sm btn-secondary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="15 18 9 12 15 6"/></svg>
+            <span data-en="Home" data-ru="Главная">Home</span>
+        </a>
+    </div>
+</div>
+
+<nav class="sb">
+    <div class="sb-sec" data-en="Start" data-ru="Старт">Start</div>
+    <a href="#intro" data-en="Introduction" data-ru="Введение">Introduction</a>
+    <a href="#install" data-en="Installation" data-ru="Установка">Installation</a>
+    <a href="#hello">Hello World</a>
+    <div class="sb-sec" data-en="Language" data-ru="Язык">Language</div>
+    <a href="#types" data-en="Types" data-ru="Типы">Types</a>
+    <a href="#variables" data-en="Variables" data-ru="Переменные">Variables</a>
+    <a href="#operators" data-en="Operators" data-ru="Операторы">Operators</a>
+    <a href="#control" data-en="Control Flow" data-ru="Управление">Control Flow</a>
+    <a href="#functions" data-en="Functions" data-ru="Функции">Functions</a>
+    <a href="#arrays" data-en="Arrays" data-ru="Массивы">Arrays</a>
+    <div class="sb-sec" data-en="Stdlib" data-ru="Библиотека">Stdlib</div>
+    <a href="#builtins" data-en="Built-ins" data-ru="Встроенные">Built-ins</a>
+    <a href="#olstream">olstream</a>
+    <a href="#olmath">olmath</a>
+    <div class="sb-sec" data-en="Graphics" data-ru="Графика">Graphics</div>
+    <a href="#olgfx">olgfx</a>
+    <a href="#ol3d">ol3d</a>
+    <a href="#shaders" data-en="Shaders" data-ru="Шейдеры">Shaders</a>
+    <div class="sb-sec" data-en="Examples" data-ru="Примеры">Examples</div>
+    <a href="#ex-calc" data-en="Calculator" data-ru="Калькулятор">Calculator</a>
+    <a href="#ex-game" data-en="2D Game" data-ru="2D Игра">2D Game</a>
+    <a href="#ex-3d" data-en="3D Demo" data-ru="3D Демо">3D Demo</a>
+    <a href="#errors" data-en="Errors" data-ru="Ошибки">Errors</a>
+</nav>
+
+<div class="dc">
+
+<section id="intro">
+<h2 data-en="Introduction" data-ru="Введение">Introduction</h2>
+<p data-en="Oul is a statically typed, interpreted language written in Rust. Built for games, graphics, and small tools. Write code, run it, stuff appears on screen. No build systems, no config files, no 47 dependencies." data-ru="Oul — статически типизированный интерпретируемый язык на Rust. Создан для игр, графики и утилит. Пишешь код, запускаешь, результат на экране. Без систем сборки, конфигов и 47 зависимостей.">Oul is a statically typed, interpreted language written in Rust.</p>
+<ul>
+<li data-en="Built-in 2D and 3D graphics" data-ru="Встроенная 2D и 3D графика">Built-in 2D and 3D graphics</li>
+<li data-en="Custom shaders" data-ru="Кастомные шейдеры">Custom shaders</li>
+<li data-en="OBJ model loading" data-ru="Загрузка OBJ моделей">OBJ model loading</li>
+<li data-en="No semicolons" data-ru="Без точек с запятой">No semicolons</li>
+<li data-en="Strict types" data-ru="Строгие типы">Strict types</li>
+</ul>
+</section>
+
+<section id="install">
+<h2 data-en="Installation" data-ru="Установка">Installation</h2>
+<h3 data-en="Windows Installer" data-ru="Windows Инсталлер">Windows Installer</h3>
+<p data-en="Download from the main page. Installs Oul and adds to PATH." data-ru="Скачай с главной страницы. Установит Oul и добавит в PATH.">Download from the main page.</p>
+<pre><code>oul myfile.oul</code></pre>
+<h3 data-en="From Source" data-ru="Из исходников">From Source</h3>
+<pre><code>git clone https://github.com/user/oul
+cd oul
+cargo build --release
+./target/release/oul hello.oul</code></pre>
+</section>
+
+<section id="hello">
+<h2>Hello World</h2>
+<pre><code><span class="kw">import</span> olstream
+
+<span class="kw">fn</span> <span class="fn">main</span>() {
+    olstream::println(<span class="str">"Hello, World!"</span>)
+}</code></pre>
+<div class="note"><strong data-en="Important:" data-ru="Важно:"></strong> <span data-en="Every program needs fn main(). Without import olstream, print won't work." data-ru="Каждой программе нужна fn main(). Без import olstream print не работает."></span></div>
+</section>
+
+<section id="types">
+<h2 data-en="Types" data-ru="Типы">Types</h2>
+<table>
+<tr><th data-en="Type" data-ru="Тип">Type</th><th data-en="What" data-ru="Что">What</th><th data-en="Example" data-ru="Пример">Example</th></tr>
+<tr><td><code>int</code></td><td data-en="Whole number" data-ru="Целое число">Whole number</td><td><code>42</code></td></tr>
+<tr><td><code>float</code></td><td data-en="Decimal" data-ru="Дробное">Decimal</td><td><code>3.14</code></td></tr>
+<tr><td><code>bool</code></td><td>true / false</td><td><code>true</code></td></tr>
+<tr><td><code>string</code></td><td data-en="Text" data-ru="Текст">Text</td><td><code>"yo"</code></td></tr>
+<tr><td><code>int[]</code></td><td data-en="Array" data-ru="Массив">Array</td><td><code>[1,2,3]</code></td></tr>
+</table>
+</section>
+
+<section id="variables">
+<h2 data-en="Variables" data-ru="Переменные">Variables</h2>
+<pre><code><span class="type">int</span> age = <span class="num">25</span>
+<span class="type">float</span> speed = <span class="num">3.5</span>
+<span class="type">bool</span> alive = <span class="kw">true</span>
+<span class="type">string</span> name = <span class="str">"Player"</span>
+
+<span class="cmt">// reassign</span>
+age = <span class="num">26</span></code></pre>
+<div class="note"><strong data-en="Strict." data-ru="Строго."></strong> <span data-en="int x = \"hello\" won't work. Oul catches type mismatches immediately." data-ru="int x = \"hello\" не сработает. Oul ловит несоответствия типов сразу."></span></div>
+</section>
+
+<section id="operators">
+<h2 data-en="Operators" data-ru="Операторы">Operators</h2>
+<h3 data-en="Math" data-ru="Математика">Math</h3>
+<p><code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code></p>
+<h3 data-en="Comparison" data-ru="Сравнение">Comparison</h3>
+<p><code>==</code> <code>!=</code> <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code></p>
+<h3 data-en="Logic" data-ru="Логика">Logic</h3>
+<p><code>and</code> <code>or</code> <code>not</code></p>
+</section>
+
+<section id="control">
+<h2 data-en="Control Flow" data-ru="Управление">Control Flow</h2>
+<h3>if / else</h3>
+<pre><code><span class="kw">if</span> (hp <= <span class="num">0</span>) {
+    olstream::println(<span class="str">"dead"</span>)
+} <span class="kw">else</span> {
+    olstream::println(<span class="str">"alive"</span>)
+}</code></pre>
+<h3>while</h3>
+<pre><code><span class="kw">while</span> (running) {
+    <span class="cmt">// game loop</span>
+}</code></pre>
+<h3>for</h3>
+<pre><code><span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < <span class="num">10</span>; i = i + <span class="num">1</span>) {
+    olstream::println(i)
+}</code></pre>
+<h3>break / continue</h3>
+<pre><code><span class="kw">while</span> (<span class="kw">true</span>) {
+    <span class="kw">if</span> (done) { <span class="kw">break</span> }
+}</code></pre>
+</section>
+
+<section id="functions">
+<h2 data-en="Functions" data-ru="Функции">Functions</h2>
+<pre><code><span class="kw">fn</span> <span class="fn">add</span>(<span class="type">int</span> a, <span class="type">int</span> b) -> <span class="type">int</span> {
+    <span class="kw">return</span> a + b
+}
+
+<span class="kw">fn</span> <span class="fn">greet</span>(<span class="type">string</span> name) {
+    olstream::println(<span class="str">"hey "</span> + name)
+}</code></pre>
+</section>
+
+<section id="arrays">
+<h2 data-en="Arrays" data-ru="Массивы">Arrays</h2>
+<pre><code><span class="type">int</span>[] nums = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>]
+olstream::println(nums[<span class="num">0</span>])
+nums[<span class="num">1</span>] = <span class="num">99</span>
+push(nums, <span class="num">40</span>)
+olstream::println(len(nums))</code></pre>
+</section>
+
+<section id="builtins">
+<h2 data-en="Built-in Functions" data-ru="Встроенные функции">Built-ins</h2>
+<table>
+<tr><th data-en="Function" data-ru="Функция">Function</th><th data-en="What" data-ru="Что">What</th></tr>
+<tr><td><code>input()</code></td><td data-en="Read line" data-ru="Прочитать строку">Read line</td></tr>
+<tr><td><code>to_int(v)</code></td><td>→ int</td></tr>
+<tr><td><code>to_float(v)</code></td><td>→ float</td></tr>
+<tr><td><code>to_string(v)</code></td><td>→ string</td></tr>
+<tr><td><code>len(x)</code></td><td data-en="Length" data-ru="Длина">Length</td></tr>
+<tr><td><code>push(arr, v)</code></td><td data-en="Add to array" data-ru="Добавить">Push</td></tr>
+</table>
+</section>
+
+<section id="olstream">
+<h2>olstream</h2>
+<pre><code><span class="kw">import</span> olstream</code></pre>
+<table>
+<tr><td><code>olstream::print(...)</code></td><td data-en="No newline" data-ru="Без переноса">No \\n</td></tr>
+<tr><td><code>olstream::println(...)</code></td><td data-en="With newline" data-ru="С переносом">With \\n</td></tr>
+</table>
+</section>
+
+<section id="olmath">
+<h2>olmath</h2>
+<pre><code><span class="kw">import</span> olmath</code></pre>
+<table>
+<tr><td><code>abs sqrt pow floor ceil</code></td><td data-en="Math basics" data-ru="Базовая математика">Basics</td></tr>
+<tr><td><code>sin cos tan atan2</code></td><td data-en="Trig" data-ru="Тригонометрия">Trig</td></tr>
+<tr><td><code>pi()</code></td><td>3.14159...</td></tr>
+<tr><td><code>random(min, max)</code></td><td data-en="Random int" data-ru="Случайное int">Random</td></tr>
+<tr><td><code>min(a,b) max(a,b)</code></td><td>Min / Max</td></tr>
+</table>
+</section>
+
+<section id="olgfx">
+<h2>olgfx</h2>
+<pre><code><span class="kw">import</span> olgfx</code></pre>
+<h3 data-en="Window" data-ru="Окно">Window</h3>
+<table>
+<tr><td><code>open(w, h, title)</code></td><td data-en="Create" data-ru="Создать">Create</td></tr>
+<tr><td><code>is_open()</code></td><td data-en="Open?" data-ru="Открыто?">Open?</td></tr>
+<tr><td><code>update()</code></td><td data-en="Show frame" data-ru="Показать кадр">Show</td></tr>
+<tr><td><code>close()</code></td><td data-en="Close" data-ru="Закрыть">Close</td></tr>
+<tr><td><code>sleep(ms)</code></td><td data-en="Wait" data-ru="Пауза">Wait</td></tr>
+</table>
+<h3 data-en="Drawing" data-ru="Рисование">Drawing</h3>
+<table>
+<tr><td><code>clear(r,g,b)</code></td><td data-en="Fill screen" data-ru="Залить">Fill</td></tr>
+<tr><td><code>pixel(x,y,r,g,b)</code></td><td>Pixel</td></tr>
+<tr><td><code>rect(x,y,w,h,r,g,b)</code></td><td>Rect</td></tr>
+<tr><td><code>line(x1,y1,x2,y2,r,g,b)</code></td><td>Line</td></tr>
+<tr><td><code>circle(cx,cy,rad,r,g,b)</code></td><td data-en="Outline" data-ru="Контур">Outline</td></tr>
+<tr><td><code>fill_circle(cx,cy,rad,r,g,b)</code></td><td data-en="Filled" data-ru="Заполненный">Filled</td></tr>
+<tr><td><code>triangle(x1,y1,x2,y2,x3,y3,r,g,b)</code></td><td>Triangle</td></tr>
+<tr><td><code>draw_text(x,y,text,r,g,b,scale)</code></td><td>Text</td></tr>
+</table>
+<h3 data-en="Input" data-ru="Ввод">Input</h3>
+<table>
+<tr><td><code>key_down(key)</code></td><td data-en="Key pressed?" data-ru="Нажата?">Pressed?</td></tr>
+<tr><td><code>mouse_x() mouse_y()</code></td><td data-en="Mouse pos" data-ru="Позиция мыши">Pos</td></tr>
+<tr><td><code>mouse_down()</code></td><td data-en="Click?" data-ru="Клик?">Click?</td></tr>
+</table>
+<h4 data-en="Keys" data-ru="Клавиши">Keys</h4>
+<div class="keys">
+<span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span>
+<span class="key">Q</span><span class="key">E</span><span class="key">R</span><span class="key">F</span>
+<span class="key">UP</span><span class="key">DOWN</span><span class="key">LEFT</span><span class="key">RIGHT</span>
+<span class="key">SPACE</span><span class="key">ENTER</span><span class="key">ESCAPE</span><span class="key">TAB</span><span class="key">SHIFT</span>
+<span class="key">1</span><span class="key">2</span><span class="key">3</span><span class="key">4</span><span class="key">5</span>
+</div>
+</section>
+
+<section id="ol3d">
+<h2>ol3d</h2>
+<pre><code><span class="kw">import</span> ol3d</code></pre>
+<h3 data-en="Meshes" data-ru="Меши">Meshes</h3>
+<table>
+<tr><td><code>create_cube()</code></td><td>→ id</td></tr>
+<tr><td><code>create_sphere(detail)</code></td><td>→ id</td></tr>
+<tr><td><code>create_plane()</code></td><td>→ id</td></tr>
+<tr><td><code>load_obj("file.obj")</code></td><td>→ id</td></tr>
+</table>
+<h3 data-en="Properties" data-ru="Свойства">Properties</h3>
+<table>
+<tr><td><code>mesh_color(id, r,g,b)</code></td><td data-en="Color (0.0–1.0)" data-ru="Цвет (0.0–1.0)">Color</td></tr>
+<tr><td><code>mesh_specular(id, spec, shine)</code></td><td data-en="Highlight" data-ru="Блик">Specular</td></tr>
+<tr><td><code>mesh_emission(id, r,g,b)</code></td><td data-en="Glow" data-ru="Свечение">Glow</td></tr>
+<tr><td><code>mesh_pos(id, x,y,z)</code></td><td data-en="Position" data-ru="Позиция">Pos</td></tr>
+<tr><td><code>mesh_rot(id, rx,ry,rz)</code></td><td data-en="Rotation" data-ru="Вращение">Rot</td></tr>
+<tr><td><code>mesh_scale(id, sx,sy,sz)</code></td><td data-en="Scale" data-ru="Масштаб">Scale</td></tr>
+</table>
+<h3 data-en="Camera" data-ru="Камера">Camera</h3>
+<table>
+<tr><td><code>camera_pos(x,y,z)</code></td><td>Pos</td></tr>
+<tr><td><code>camera_rot(yaw,pitch)</code></td><td>Look</td></tr>
+<tr><td><code>set_fov(val)</code></td><td>FOV</td></tr>
+</table>
+<h3 data-en="Lighting" data-ru="Освещение">Lighting</h3>
+<table>
+<tr><td><code>add_light(dx,dy,dz,r,g,b,intensity)</code></td><td data-en="Add" data-ru="Добавить">Add</td></tr>
+<tr><td><code>clear_lights()</code></td><td data-en="Clear" data-ru="Убрать">Clear</td></tr>
+<tr><td><code>ambient(r,g,b)</code></td><td>Ambient</td></tr>
+</table>
+<h3 data-en="Effects" data-ru="Эффекты">Effects</h3>
+<table>
+<tr><td><code>fog(on,r,g,b,start,end)</code></td><td data-en="Fog" data-ru="Туман">Fog</td></tr>
+<tr><td><code>sky_color(r,g,b)</code></td><td data-en="Sky" data-ru="Небо">Sky</td></tr>
+</table>
+<h3 data-en="Render" data-ru="Рендер">Render</h3>
+<table>
+<tr><td><code>shader(name)</code></td><td>wireframe / flat / phong / custom</td></tr>
+<tr><td><code>render(id)</code></td><td data-en="Draw mesh" data-ru="Нарисовать">Draw</td></tr>
+<tr><td><code>render_all()</code></td><td data-en="Draw all" data-ru="Нарисовать все">All</td></tr>
+</table>
+<h3 data-en="Timing" data-ru="Время">Timing</h3>
+<table>
+<tr><td><code>tick()</code></td><td data-en="Update counters" data-ru="Обновить">Update</td></tr>
+<tr><td><code>fps()</code></td><td>FPS</td></tr>
+<tr><td><code>delta_time()</code></td><td data-en="Seconds since last frame" data-ru="Секунд с прошлого кадра">Delta</td></tr>
+</table>
+</section>
+
+<section id="shaders">
+<h2 data-en="Custom Shaders" data-ru="Кастомные шейдеры">Custom Shaders</h2>
+<pre><code>ol3d::create_shader(<span class="str">"toon"</span>)
+ol3d::shader_param(<span class="str">"toon"</span>, <span class="str">"base_color"</span>, <span class="num">1.0</span>, <span class="num">0.5</span>, <span class="num">0.2</span>)
+ol3d::shader_param(<span class="str">"toon"</span>, <span class="str">"shadow_color"</span>, <span class="num">0.1</span>, <span class="num">0.05</span>, <span class="num">0.05</span>)
+ol3d::shader_param(<span class="str">"toon"</span>, <span class="str">"bands"</span>, <span class="num">4</span>)
+ol3d::shader_param(<span class="str">"toon"</span>, <span class="str">"rim_color"</span>, <span class="num">1.0</span>, <span class="num">0.7</span>, <span class="num">0.3</span>)
+ol3d::shader_param(<span class="str">"toon"</span>, <span class="str">"rim_power"</span>, <span class="num">2.0</span>)
+ol3d::shader_param(<span class="str">"toon"</span>, <span class="str">"outline"</span>, <span class="kw">true</span>)
+ol3d::shader(<span class="str">"toon"</span>)</code></pre>
+<table>
+<tr><th data-en="Param" data-ru="Параметр">Param</th><th data-en="Args" data-ru="Аргументы">Args</th><th data-en="What" data-ru="Что">What</th></tr>
+<tr><td><code>base_color</code></td><td>r g b</td><td data-en="Lit color" data-ru="Цвет на свету">Lit</td></tr>
+<tr><td><code>shadow_color</code></td><td>r g b</td><td data-en="Shadow" data-ru="Тень">Shadow</td></tr>
+<tr><td><code>rim_color</code></td><td>r g b</td><td>Rim</td></tr>
+<tr><td><code>rim_power</code></td><td>float</td><td data-en="Sharpness" data-ru="Резкость">Sharp</td></tr>
+<tr><td><code>bands</code></td><td>int</td><td data-en="Toon bands" data-ru="Полосы">Bands</td></tr>
+<tr><td><code>outline</code></td><td>bool</td><td data-en="Show outline" data-ru="Контур">Outline</td></tr>
+<tr><td><code>outline_color</code></td><td>r g b</td><td data-en="Color" data-ru="Цвет">Color</td></tr>
+<tr><td><code>outline_width</code></td><td>float</td><td data-en="Thickness" data-ru="Толщина">Width</td></tr>
+</table>
+</section>
+
+<section id="ex-calc">
+<h2 data-en="Example: Calculator" data-ru="Пример: Калькулятор">Calculator</h2>
+<pre><code><span class="kw">import</span> olstream
+
+<span class="kw">fn</span> <span class="fn">main</span>() {
+    <span class="type">int</span> a = to_int(input(<span class="str">"a: "</span>))
+    <span class="type">string</span> op = input(<span class="str">"op: "</span>)
+    <span class="type">int</span> b = to_int(input(<span class="str">"b: "</span>))
+
+    <span class="kw">if</span> (op == <span class="str">"+"</span>) { olstream::println(a + b) }
+    <span class="kw">else if</span> (op == <span class="str">"-"</span>) { olstream::println(a - b) }
+    <span class="kw">else if</span> (op == <span class="str">"*"</span>) { olstream::println(a * b) }
+    <span class="kw">else if</span> (op == <span class="str">"/"</span>) { olstream::println(a / b) }
+}</code></pre>
+</section>
+
+<section id="ex-game">
+<h2 data-en="Example: 2D Game" data-ru="Пример: 2D Игра">2D Game</h2>
+<pre><code><span class="kw">import</span> olgfx
+
+<span class="kw">fn</span> <span class="fn">main</span>() {
+    olgfx::open(<span class="num">800</span>, <span class="num">600</span>, <span class="str">"Game"</span>)
+    <span class="type">int</span> x = <span class="num">400</span>
+    <span class="type">int</span> y = <span class="num">300</span>
+
+    <span class="kw">while</span> (olgfx::is_open()) {
+        olgfx::clear(<span class="num">0</span>, <span class="num">0</span>, <span class="num">0</span>)
+        <span class="kw">if</span> (olgfx::key_down(<span class="str">"W"</span>)) { y = y - <span class="num">3</span> }
+        <span class="kw">if</span> (olgfx::key_down(<span class="str">"S"</span>)) { y = y + <span class="num">3</span> }
+        <span class="kw">if</span> (olgfx::key_down(<span class="str">"A"</span>)) { x = x - <span class="num">3</span> }
+        <span class="kw">if</span> (olgfx::key_down(<span class="str">"D"</span>)) { x = x + <span class="num">3</span> }
+        olgfx::fill_circle(x, y, <span class="num">20</span>, <span class="num">0</span>, <span class="num">200</span>, <span class="num">255</span>)
+        olgfx::update()
+        olgfx::sleep(<span class="num">16</span>)
+    }
+    olgfx::close()
+}</code></pre>
+</section>
+
+<section id="ex-3d">
+<h2 data-en="Example: 3D Demo" data-ru="Пример: 3D Демо">3D Demo</h2>
+<pre><code><span class="kw">import</span> olgfx
+<span class="kw">import</span> ol3d
+
+<span class="kw">fn</span> <span class="fn">main</span>() {
+    olgfx::open(<span class="num">800</span>, <span class="num">600</span>, <span class="str">"3D"</span>)
+    ol3d::screen_size(<span class="num">800</span>, <span class="num">600</span>)
+    ol3d::shader(<span class="str">"phong"</span>)
+
+    <span class="type">int</span> cube = ol3d::create_cube()
+    ol3d::mesh_color(cube, <span class="num">0.2</span>, <span class="num">0.6</span>, <span class="num">1.0</span>)
+    <span class="type">float</span> yaw = <span class="num">0.0</span>
+
+    <span class="kw">while</span> (olgfx::is_open()) {
+        ol3d::tick()
+        olgfx::clear(<span class="num">15</span>, <span class="num">15</span>, <span class="num">25</span>)
+        yaw = yaw + ol3d::delta_time()
+        ol3d::camera_pos(<span class="num">0.0</span>, <span class="num">0.0</span>, <span class="num">-5.0</span>)
+        ol3d::camera_rot(yaw, <span class="num">0.3</span>)
+        ol3d::render(cube)
+        olgfx::update()
+        olgfx::sleep(<span class="num">1</span>)
+    }
+    olgfx::close()
+}</code></pre>
+</section>
+
+<section id="errors">
+<h2 data-en="Error Messages" data-ru="Ошибки">Errors</h2>
+<p data-en="Oul shows errors like a C++ compiler — file, line, column, pointer." data-ru="Oul показывает ошибки как C++ компилятор — файл, строка, колонка, указатель.">Oul shows errors like a C++ compiler.</p>
+<pre><code>test.oul:4:5: error: use of undeclared library 'olstream'
+    olstream::println("Hello")
+    ^^^^^^^^
+note: add `import olstream` at the top of the file</code></pre>
+<pre><code>test.oul:3:13: error: cannot initialize 'int' with 'string'
+    int x = "hello"
+            ^^^^^^^</code></pre>
+</section>
+
+<div style="text-align:center;padding:60px 0 20px;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:60px;">Oul v0.4</div>
+
+</div>
+
+<script>
+let lang='en';
+function toggleLang(){
+    lang=lang==='en'?'ru':'en';
+    document.getElementById('langBtn').textContent=lang==='en'?'RU':'EN';
+    document.querySelectorAll('[data-en]').forEach(el=>{
+        const t=el.getAttribute('data-'+lang);
+        if(t)el.textContent=t;
+    });
+}
+</script>
+
+</body>
+</html>
