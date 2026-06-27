@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oul — Programming Language</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 0 40px; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .header-logo { font-size: 20px; font-weight: 800; letter-spacing: 4px; color: var(--accent); }
+        .header-nav { display: flex; align-items: center; gap: 32px; }
+        .header-nav a { font-size: 14px; color: var(--text2); font-weight: 500; }
+        .header-nav a:hover { color: #fff; }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding: 120px 40px 80px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 16px; border: 1px solid var(--border2);
+            border-radius: 100px; font-size: 12px; color: var(--text2);
+            margin-bottom: 40px; letter-spacing: 1px;
+        }
+        .hero-badge .dot {
+            width: 6px; height: 6px; background: #4ade80;
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        .hero h1 {
+            font-size: clamp(72px, 12vw, 140px); font-weight: 900;
+            letter-spacing: -3px; line-height: 0.95;
+            background: linear-gradient(180deg, #ffffff 30%, #555555 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 30px;
+        }
+        .hero-sub {
+            font-size: 18px; color: var(--text2); max-width: 500px;
+            line-height: 1.7; margin-bottom: 50px;
+        }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .hero-code { margin-top: 80px; max-width: 550px; width: 100%; text-align: left; }
+        .hero-code pre {
+            border-radius: 16px; padding: 28px 32px;
+            border: 1px solid var(--border2); background: var(--bg2);
+        }
+        .code-dots { display: flex; gap: 8px; margin-bottom: 18px; }
+        .code-dots span { width: 10px; height: 10px; border-radius: 50%; background: #333; }
+
+        .features { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+        .features-title { text-align: center; margin-bottom: 60px; }
+        .features-title h2 { font-size: 40px; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+        .features-title p { color: var(--text2); font-size: 16px; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .feature-card {
+            background: var(--bg3); border: 1px solid var(--border);
+            border-radius: 16px; padding: 32px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .feature-card:hover {
+            border-color: var(--border2); transform: translateY(-4px); background: var(--bg4);
+        }
+        .feature-icon {
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            background: var(--bg5); border: 1px solid var(--border);
+            border-radius: 10px; margin-bottom: 18px;
+        }
+        .feature-icon svg { width: 20px; height: 20px; stroke: var(--text2); fill: none; stroke-width: 1.5; }
+        .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .feature-card p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+        .install { padding: 100px 40px; max-width: 700px; margin: 0 auto; text-align: center; }
+        .install h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; }
+        .install > p { color: var(--text2); margin-bottom: 40px; font-size: 16px; }
+        .install-options { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+        .install-option {
+            background: var(--bg3); border: 1px solid var(--border);
+            border-radius: 14px; padding: 24px 28px;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: all 0.25s; cursor: pointer; text-decoration: none;
+        }
+        .install-option:hover { border-color: var(--border2); background: var(--bg4); }
+        .install-option-left { display: flex; align-items: center; gap: 16px; text-align: left; }
+        .install-option-left svg { width: 24px; height: 24px; stroke: var(--text2); fill: none; stroke-width: 1.5; flex-shrink: 0; }
+        .install-option-left h4 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+        .install-option-left p { font-size: 13px; color: var(--text2); margin: 0; }
+        .platform-tag {
+            padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px;
+            font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 1px;
+        }
+        .install-source { margin-top: 30px; }
+        .install-source h4 {
+            font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text3); margin-bottom: 14px;
+        }
+
+        footer {
+            padding: 40px; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1100px; margin: 0 auto;
+        }
+        footer p { font-size: 13px; color: var(--text3); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { font-size: 13px; color: var(--text3); }
+        .footer-links a:hover { color: var(--text2); }
+
+        @media (max-width: 768px) {
+            header { padding: 0 20px; }
+            .header-nav { display: none; }
+            .hero { padding: 100px 20px 60px; }
+            .features { padding: 60px 20px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .install { padding: 60px 20px; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            footer { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/" class="header-logo">OUL</a>
+    <nav class="header-nav">
+        <a href="/docs" data-en="Docs" data-ru="Документация">Docs</a>
+        <a href="#features" data-en="Features" data-ru="Возможности">Features</a>
+        <a href="#install" data-en="Install" data-ru="Установка">Install</a>
+    </nav>
+    <div class="header-right">
+        <button class="btn btn-sm btn-secondary" onclick="toggleLang()" id="langBtn">RU</button>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-badge">
+        <span class="dot"></span>
+        <span data-en="v0.4 — Now with 3D engine" data-ru="v0.4 — Теперь с 3D движком">v0.4 — Now with 3D engine</span>
+    </div>
+
+    <h1>OUL</h1>
+
+    <p class="hero-sub" data-en="A simple programming language for games and graphics. Built with Rust. No complexity, just code." data-ru="Простой язык программирования для игр и графики. Написан на Rust. Без сложностей, просто код.">A simple programming language for games and graphics. Built with Rust. No complexity, just code.</p>
+
+    <div class="hero-buttons">
+        <a href="#install" class="btn btn-primary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span data-en="Download" data-ru="Скачать">Download</span>
+        </a>
+        <a href="/docs" class="btn btn-secondary">
+            <span data-en="Documentation" data-ru="Документация">Documentation</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+    </div>
+
+    <div class="hero-code">
+        <pre><div class="code-dots"><span></span><span></span><span></span></div><code><span class="kw">import</span> olgfx
+<span class="kw">import</span> ol3d
+
+<span class="kw">fn</span> <span class="fn">main</span>() {
+    olgfx::open(<span class="num">800</span>, <span class="num">600</span>, <span class="str">"My Game"</span>)
+    <span class="type">int</span> cube = ol3d::create_cube()
+    ol3d::shader(<span class="str">"phong"</span>)
+
+    <span class="kw">while</span> (olgfx::is_open()) {
+        olgfx::clear(<span class="num">0</span>, <span class="num">0</span>, <span class="num">0</span>)
+        ol3d::render(cube)
+        olgfx::update()
+    }
+}</code></pre>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="features-title">
+        <h2 data-en="Everything you need" data-ru="Всё что нужно">Everything you need</h2>
+        <p data-en="No setup hell. No dependency nightmares. Just install and build." data-ru="Никакого ада настроек. Просто установи и создавай.">No setup hell. No dependency nightmares. Just install and build.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3 data-en="Fast & Simple" data-ru="Быстрый и простой">Fast & Simple</h3>
+            <p data-en="No semicolons. No boilerplate. Clean syntax you learn in 10 minutes." data-ru="Без точек с запятой. Чистый синтаксис за 10 минут.">No semicolons. No boilerplate. Clean syntax you learn in 10 minutes.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3 data-en="Built-in Graphics" data-ru="Встроенная графика">Built-in Graphics</h3>
+            <p data-en="2D and 3D rendering out of the box. No external libraries." data-ru="2D и 3D рендеринг из коробки. Без внешних библиотек.">2D and 3D rendering out of the box. No external libraries.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3 data-en="3D Engine" data-ru="3D Движок">3D Engine</h3>
+            <p data-en="Load .obj models. Cameras, lights, shaders. Full 3D pipeline." data-ru="Загрузка .obj моделей. Камеры, свет, шейдеры. Полный 3D пайплайн.">Load .obj models. Cameras, lights, shaders. Full 3D pipeline.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/><path d="M2 12h20"/></svg>
+            </div>
+            <h3 data-en="Custom Shaders" data-ru="Кастомные шейдеры">Custom Shaders</h3>
+            <p data-en="Toon shading, rim lighting, outlines. Tweak every parameter." data-ru="Тун-шейдинг, rim-освещение, контуры. Настрой каждый параметр.">Toon shading, rim lighting, outlines. Tweak every parameter.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 data-en="Strict Types" data-ru="Строгие типы">Strict Types</h3>
+            <p data-en="int, float, bool, string. No weird coercion. Catches bugs early." data-ru="int, float, bool, string. Без магии. Ловит баги сразу.">int, float, bool, string. No weird coercion. Catches bugs early.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h3 data-en="Built with Rust" data-ru="Написан на Rust">Built with Rust</h3>
+            <p data-en="Fast execution, safe memory, cross-platform." data-ru="Быстрое выполнение, безопасная память, кроссплатформенность.">Fast execution, safe memory, cross-platform.</p>
+        </div>
+    </div>
+</section>
+
+<section class="install" id="install">
+    <h2 data-en="Get Oul" data-ru="Скачать Oul">Get Oul</h2>
+    <p data-en="Download the installer or build from source." data-ru="Скачай инсталлер или собери из исходников.">Download the installer or build from source.</p>
+
+    <div class="install-options">
+        <a href="#" class="install-option">
+            <div class="install-option-left">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <div>
+                    <h4>Windows Installer</h4>
+                    <p data-en="One-click setup, adds to PATH" data-ru="Установка в один клик">One-click setup, adds to PATH</p>
+                </div>
+            </div>
+            <span class="platform-tag">exe</span>
+        </a>
+        <a href="#" class="install-option">
+            <div class="install-option-left">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                <div>
+                    <h4>Build from Source</h4>
+                    <p data-en="Requires Rust and Cargo" data-ru="Нужен Rust и Cargo">Requires Rust and Cargo</p>
+                </div>
+            </div>
+            <span class="platform-tag">source</span>
+        </a>
+    </div>
+
+    <div class="install-source">
+        <h4 data-en="Terminal" data-ru="Терминал">Terminal</h4>
+<pre><code>git clone https://github.com/user/oul
+cd oul
+cargo build --release
+./target/release/oul hello.oul</code></pre>
+    </div>
+</section>
+
+<footer>
+    <p>Oul v0.4</p>
+    <div class="footer-links">
+        <a href="/docs">Docs</a>
+        <a href="#" onclick="toggleLang(); return false;" data-en="Русский" data-ru="English">Русский</a>
+    </div>
+</footer>
+
+<script>
+let lang='en';
+function toggleLang(){
+    lang=lang==='en'?'ru':'en';
+    document.getElementById('langBtn').textContent=lang==='en'?'RU':'EN';
+    document.querySelectorAll('[data-en]').forEach(el=>{
+        const t=el.getAttribute('data-'+lang);
+        if(t)el.textContent=t;
+    });
+}
+</script>
+
+</body>
+</html>
