@@ -147,10 +147,10 @@
 </header>
 
 <section class="hero">
-    <div class="hero-badge">
-        <span class="dot"></span>
-        <span data-en="v0.4 — Now with 3D engine" data-ru="v0.4 — Теперь с 3D движком">v0.4 — Now with 3D engine</span>
-    </div>
+<div class="hero-badge">
+    <span class="dot"></span>
+    <span data-en="v0.1 — First release" data-ru="v0.1 — Первый релиз">v0.1 — First release</span>
+</div>
 
     <h1>OUL</h1>
 
@@ -237,43 +237,22 @@
 </section>
 
 <section class="install" id="install">
-    <h2 data-en="Get Oul" data-ru="Скачать Oul">Get Oul</h2>
-    <p data-en="Download the installer or build from source." data-ru="Скачай инсталлер или собери из исходников.">Download the installer or build from source.</p>
-
-    <div class="install-options">
-        <a href="#" class="install-option">
-            <div class="install-option-left">
-                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <div>
-                    <h4>Windows Installer</h4>
-                    <p data-en="One-click setup, adds to PATH" data-ru="Установка в один клик">One-click setup, adds to PATH</p>
-                </div>
+<div class="install-options">
+    <a href="/downloads/oul-setup-0.1.exe" class="install-option" download>
+        <div class="install-option-left">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <div>
+                <h4>Windows Installer</h4>
+                <p data-en="oul-setup-0.1.exe — adds Oul to PATH" data-ru="oul-setup-0.1.exe — добавляет Oul в PATH">oul-setup-0.1.exe — adds Oul to PATH</p>
             </div>
-            <span class="platform-tag">exe</span>
-        </a>
-        <a href="#" class="install-option">
-            <div class="install-option-left">
-                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                <div>
-                    <h4>Build from Source</h4>
-                    <p data-en="Requires Rust and Cargo" data-ru="Нужен Rust и Cargo">Requires Rust and Cargo</p>
-                </div>
-            </div>
-            <span class="platform-tag">source</span>
-        </a>
-    </div>
+        </div>
+        <span class="platform-tag">v0.1</span>
+    </a>
+</div>
 
-    <div class="install-source">
-        <h4 data-en="Terminal" data-ru="Терминал">Terminal</h4>
-<pre><code>git clone https://github.com/user/oul
-cd oul
-cargo build --release
-./target/release/oul hello.oul</code></pre>
-    </div>
-</section>
 
 <footer>
-    <p>Oul v0.4</p>
+    <p>Oul v0.1</p>
     <div class="footer-links">
         <a href="/docs">Docs</a>
         <a href="#" onclick="toggleLang(); return false;" data-en="Русский" data-ru="English">Русский</a>
